@@ -1,0 +1,27 @@
+# Carpetas de compilación
+/build/
+/bin/
+
+# Archivos de proyecto de NetBeans
+/nbproject/
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de Java compilados
+*.class
+
+# Archivos temporales del IDE
+*.log
+*.tmp
+
+# Carpetas de librerías descargadas automáticamente
+/lib/
+
+# Archivos de configuración de usuario
+*.swp
+*.swo
+
+
+
