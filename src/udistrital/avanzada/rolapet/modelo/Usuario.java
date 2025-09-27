@@ -4,120 +4,200 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Representa un Usuario dentro del sistema RolaPet.
- * <p>
- * Un Usuario puede registrarse en el sistema, agregar o eliminar vehículos,
- * consultar su información y gestionar su lista de amigos. Esta clase hereda
- * de {@link Persona} y define su rol específico como "Usuario".
- * </p>
+ * Clase que representa a un Usuario en el sistema RolaPet.
  * 
- * <p>
- * Cada Usuario mantiene listas de {@link Vehiculo} y de amigos (otros usuarios),
- * permitiendo gestionar los vehículos propios y relaciones sociales dentro del sistema.
- * </p>
+ * Un Usuario es una persona que puede registrarse en el sistema,
+ * gestionar vehículos eléctricos y mantener una lista de amigos.
+ * Esta clase extiende de Persona y agrega funcionalidades específicas
+ * para usuarios regulares del sistema.
  * 
- * @author Diego
- * @version 1.1
- * @date 23/09/2025
- */
-
-/* Fecha de Modificacion: 24/09/2025
- * Modificado por: Diego
- * Nro. Orden de Trabajo: 001
- * Descripción de la modificación:
- *    Se añadieron listas de vehículos y amigos al Usuario,
- *    con métodos para agregar, eliminar y mostrar.
+ * @author Equipo RolaPet
+ * @version 1.0
+ * @since 2025
  */
 public class Usuario extends Persona {
-
     
-    private List<Vehiculo> vehiculos; // Lista de vehículos que posee el usuario
+    /** Dirección de correo electrónico del usuario */
+    private String email;
     
-    private List<Usuario> amigos; //Lista Lista de amigos del usuario
-
+    /** Lista de vehículos que posee el usuario */
+    private List<Vehiculo> vehiculos;
+    
+    /** Lista de amigos del usuario (otros usuarios) */
+    private List<Usuario> amigos;
+    
     /**
-     * Crea un nuevo Usuario con la información básica.
-     * Inicializa las listas de vehículos y amigos.
+     * Constructor de la clase Usuario.
      * 
-     * @param cedula   La cédula del usuario
-     * @param nombre   El nombre del usuario
-     * @param apellido El apellido del usuario
-     * @param telefono El número de teléfono del usuario
-     * @param correo   El correo electrónico del usuario
-     * @param password La contraseña del usuario
+     * Este constructor crea un nuevo usuario con la información básica
+     * y inicializa las listas de vehículos y amigos como listas vacías.
+     * 
+     * @param cedula   Cédula de identificación del usuario
+     * @param nombre   Nombre completo del usuario
+     * @param telefono Número de teléfono del usuario
+     * @param password Contraseña de acceso del usuario
+     * @param email    Dirección de correo electrónico del usuario
      */
-    public Usuario(int cedula, String nombre, String apellido, int telefono, String correo, String password) {
-        super(cedula, nombre, apellido, telefono, correo, password);
+    public Usuario(String cedula, String nombre, String telefono, String password, String email) {
+        super(cedula, nombre, telefono, password);
+        this.email = email;
         this.vehiculos = new ArrayList<>();
         this.amigos = new ArrayList<>();
     }
-
+    
     /**
-     * Devuelve el rol específico de este usuario.
+     * Obtiene la dirección de correo electrónico del usuario.
      * 
-     * @return Una cadena indicando que es "Usuario".
+     * Este método devuelve el email registrado del usuario,
+     * que se utiliza para autenticación y comunicación.
+     * 
+     * @return La dirección de email del usuario
+     */
+    @Override
+    public String getEmail() {
+        return email;
+    }
+    
+    /**
+     * Establece la dirección de correo electrónico del usuario.
+     * 
+     * Este método permite actualizar el email del usuario
+     * en caso de cambios o correcciones.
+     * 
+     * @param email La nueva dirección de email del usuario
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
+    /**
+     * Obtiene el rol específico del usuario.
+     * 
+     * Este método identifica que esta persona es un Usuario
+     * del sistema, diferenciándolo de Administradores y Proveedores.
+     * 
+     * @return El rol "Usuario" para esta persona
      */
     @Override
     public String getRol() {
         return "Usuario";
     }
-
+    
     /**
-     * Agrega un vehículo a la lista de vehículos del usuario.
+     * Obtiene la lista de vehículos del usuario.
      * 
-     * @param v El vehículo a agregar
-     */
-    public void agregarVehiculo(Vehiculo v) {
-        vehiculos.add(v);
-    }
-
-    /**
-     * Elimina un vehículo de la lista de vehículos del usuario.
+     * Este método devuelve una copia de la lista de vehículos
+     * para evitar modificaciones externas no controladas.
      * 
-     * @param v El vehículo a eliminar
+     * @return Lista de vehículos que posee el usuario
      */
-    public void eliminarVehiculo(Vehiculo v) {
-        vehiculos.remove(v);
+    public List<Vehiculo> getVehiculos() {
+        return new ArrayList<>(vehiculos);
     }
-
+    
     /**
-    * Muestra información de todos los vehículos del usuario.
-    */
-    public void mostrarVehiculos() {
-     for (Vehiculo v : vehiculos) {
-            System.out.println(
-                "ID: " + v.getId() +
-                " | Marca: " + v.getMarca() +
-                " | Autonomía: " + v.getAutonomiaKm() + " km" +
-                " | Velocidad Máx: " + v.getVelocidadMax() + " km/h"
-            );
+     * Agrega un vehículo a la lista del usuario.
+     * 
+     * Este método permite al usuario agregar un nuevo vehículo
+     * a su colección personal, verificando que no esté duplicado.
+     * 
+     * @param vehiculo El vehículo a agregar a la lista del usuario
+     * @return true si el vehículo se agregó exitosamente, false si ya existía
+     */
+    public boolean agregarVehiculo(Vehiculo vehiculo) {
+        if (vehiculo != null && !vehiculos.contains(vehiculo)) {
+            vehiculos.add(vehiculo);
+            return true;
         }
-    }   
-
-    /**
-     * Agrega un amigo a la lista de amigos del usuario.
-     * 
-     * @param u El usuario a agregar como amigo
-     */
-    public void agregarAmigo(Usuario u) {
-        amigos.add(u);
+        return false;
     }
-
+    
     /**
-     * Elimina un amigo de la lista de amigos del usuario.
+     * Elimina un vehículo de la lista del usuario.
      * 
-     * @param u El usuario a eliminar de la lista de amigos
+     * Este método permite al usuario remover un vehículo
+     * de su colección personal.
+     * 
+     * @param vehiculo El vehículo a eliminar de la lista del usuario
+     * @return true si el vehículo se eliminó exitosamente, false si no existía
      */
-    public void eliminarAmigo(Usuario u) {
-        amigos.remove(u);
+    public boolean eliminarVehiculo(Vehiculo vehiculo) {
+        return vehiculos.remove(vehiculo);
     }
-
+    
     /**
-     * Muestra los nombres de todos los amigos del usuario.
+     * Obtiene la lista de amigos del usuario.
+     * 
+     * Este método devuelve una copia de la lista de amigos
+     * para evitar modificaciones externas no controladas.
+     * 
+     * @return Lista de amigos del usuario
      */
-    public void mostrarAmigos() {
-        for (Usuario a : amigos) {
-            System.out.println(a.getNombre());
+    public List<Usuario> getAmigos() {
+        return new ArrayList<>(amigos);
+    }
+    
+    /**
+     * Agrega un amigo a la lista del usuario.
+     * 
+     * Este método permite al usuario agregar otro usuario como amigo,
+     * verificando que no sea el mismo usuario y que no esté duplicado.
+     * 
+     * @param amigo El usuario a agregar como amigo
+     * @return true si el amigo se agregó exitosamente, false si ya era amigo o es el mismo usuario
+     */
+    public boolean agregarAmigo(Usuario amigo) {
+        if (amigo != null && !amigo.equals(this) && !amigos.contains(amigo)) {
+            amigos.add(amigo);
+            return true;
         }
+        return false;
+    }
+    
+    /**
+     * Elimina un amigo de la lista del usuario.
+     * 
+     * Este método permite al usuario remover otro usuario
+     * de su lista de amigos.
+     * 
+     * @param amigo El usuario a eliminar de la lista de amigos
+     * @return true si el amigo se eliminó exitosamente, false si no era amigo
+     */
+    public boolean eliminarAmigo(Usuario amigo) {
+        return amigos.remove(amigo);
+    }
+    
+    /**
+     * Verifica si un usuario es amigo del usuario actual.
+     * 
+     * Este método permite verificar si un usuario específico
+     * está en la lista de amigos del usuario actual.
+     * 
+     * @param usuario El usuario a verificar si es amigo
+     * @return true si el usuario es amigo, false en caso contrario
+     */
+    public boolean esAmigo(Usuario usuario) {
+        return amigos.contains(usuario);
+    }
+    
+    /**
+     * Genera una representación en texto del usuario.
+     * 
+     * Este método crea una cadena de texto que contiene la información
+     * completa del usuario, incluyendo datos personales y estadísticas
+     * de vehículos y amigos.
+     * 
+     * @return Una cadena con la información completa del usuario
+     */
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "cedula='" + cedula + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", telefono='" + telefono + '\'' +
+                ", email='" + email + '\'' +
+                ", vehiculos=" + vehiculos.size() +
+                ", amigos=" + amigos.size() +
+                '}';
     }
 }
