@@ -1,4 +1,4 @@
-package udistrital.avanzada.rolapet;
+package udistrital.avanzada.rolapet.controlador;
 
 import udistrital.avanzada.rolapet.controlador.ControladorRolaPET;
 import udistrital.avanzada.rolapet.vista.VentanaPrincipal;
@@ -66,12 +66,13 @@ public class Launcher {
      * proporcionando una experiencia más nativa e integrada.
      */
     private static void configurarLookAndFeel() {
-        try {
-            // Configurar el look and feel del sistema operativo
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeel());
-        } catch (Exception e) {
-            // Si no se puede configurar el look and feel, usar el por defecto
-            System.err.println("No se pudo configurar el look and feel del sistema: " + e.getMessage());
-        }
+    try {
+        // Configurar el look and feel del sistema operativo
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+    } catch (Exception e) {
+        // Si no se puede configurar el look and feel, usar el por defecto
+        System.err.println("No se pudo configurar el look and feel del sistema: " + e.getMessage());
     }
+}
+
 }
