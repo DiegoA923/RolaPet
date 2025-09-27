@@ -38,11 +38,14 @@ public class VentanaPrincipal extends JFrame {
      * Constructor de la ventana principal.
      * 
      * Este constructor inicializa la ventana principal del sistema,
-     * creando el controlador, configurando los componentes de la interfaz
-     * y estableciendo la configuración inicial de la ventana.
+     * recibiendo el controlador como parámetro para seguir los principios SOLID,
+     * configurando los componentes de la interfaz y estableciendo la configuración
+     * inicial de la ventana.
+     * 
+     * @param controlador El controlador del sistema
      */
-    public VentanaPrincipal() {
-        this.controlador = new ControladorRolaPET();
+    public VentanaPrincipal(IControladorRolaPET controlador) {
+        this.controlador = controlador;
         inicializarComponentes();
         configurarVentana();
         mostrarPanelLogin();
@@ -241,27 +244,4 @@ public class VentanaPrincipal extends JFrame {
                 JOptionPane.INFORMATION_MESSAGE);
     }
     
-    /**
-     * Método principal para ejecutar la aplicación.
-     * 
-     * Este método es el punto de entrada de la aplicación. Configura
-     * el look and feel del sistema, crea la ventana principal y la
-     * hace visible al usuario. Utiliza SwingUtilities.invokeLater
-     * para asegurar que la interfaz se ejecute en el hilo de eventos.
-     * 
-     * @param args Argumentos de la línea de comandos (no utilizados)
-     */
-    public static void main(String[] args) {
-        // Configurar el look and feel del sistema operativo
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeel());
-        } catch (Exception e) {
-            // Si no se puede configurar el look and feel, usar el por defecto
-        }
-        
-        // Ejecutar la aplicación en el hilo de eventos de Swing
-        SwingUtilities.invokeLater(() -> {
-            new VentanaPrincipal().setVisible(true);
-        });
-    }
 }
